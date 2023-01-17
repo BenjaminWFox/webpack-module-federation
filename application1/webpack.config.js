@@ -7,14 +7,14 @@ module.exports = {
   mode: 'development',
   entry: './src/index.ts',
   output: {
-    publicPath: '/',
+    publicPath: 'auto',
     path: path.join(__dirname, '/dist'),
     filename: 'index.js',
   },
   // webpack 5 comes with devServer which loads in development mode
   devServer: {
     host: '0.0.0.0',
-    port: 8080,
+    port: 8081,
     open: false,
   },
   resolve: {
@@ -33,10 +33,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({ template: './src/index.html' }),
     new ModuleFederationPlugin({
-      name: "host",
-      remoteType: 'var',
-      remotes: {
-        remote: "remote" //remote module
+      name: 'remote',
+      library: { type: 'var', name: 'remote' },
+      filename: 'remoteEntry.js',
+      exposes: {
+        "./RemoteApp": "./src/RemoteApp.tsx",
       },
       shared: {
         'react': { singleton: true, eager: true } ,
