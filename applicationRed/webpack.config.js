@@ -7,14 +7,14 @@ module.exports = {
   mode: 'development',
   entry: './src/index.ts',
   output: {
-    publicPath: '/',
+    publicPath: 'auto',
     path: path.join(__dirname, '/dist'),
     filename: 'index.js',
   },
   // webpack 5 comes with devServer which loads in development mode
   devServer: {
     host: '0.0.0.0',
-    port: 8080,
+    port: 8082,
     open: false,
   },
   resolve: {
@@ -31,13 +31,16 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
     new ModuleFederationPlugin({
-      name: "host",
-      remoteType: 'var',
-      remotes: {
-        primeBlue: "remoteNameBlue", //remote module
-        primeRed: "remoteNameRed" //remote module
+      name: 'remoteNameDoesNotMatterRed',
+      library: { type: 'var', name: 'remoteNameRed' },
+      filename: 'remoteEntryRed.js',
+      exposes: {
+        // Note: The file name here (RemoteAppBlue.tsx) MUST be unique. A collision will cause problems on the host.
+        "./RemoteAppRed": "./src/RemoteAppRed.tsx",
       },
       shared: {
         'react': { singleton: true, eager: true } ,

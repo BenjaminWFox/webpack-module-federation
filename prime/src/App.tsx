@@ -1,8 +1,7 @@
 import React, { useState, Suspense } from 'react'
 import log from './common'
-
-// const RemoteApp = React.lazy(() => import("app2/App"));
-const RemoteApp = React.lazy(() => import('remote/RemoteApp'));
+import RemoteRed from './RemoteRed'
+import RemoteBlue from './RemoteBlue'
 
 export default function App(): JSX.Element {
   const [clicks, setClicks] = useState(0)
@@ -20,11 +19,11 @@ export default function App(): JSX.Element {
         <h3>Clicked {clicks} times.</h3>
         <button onClick={handleClick}>Click Me</button>
       </div>
-
-      <React.Suspense fallback="loading">
-          <RemoteApp>
-          </RemoteApp>
-      </React.Suspense>
+      <br />
+      <RemoteBlue />
+      <br />
+      <RemoteRed />
+      <br />
     </>
   )
 }

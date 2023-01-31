@@ -1,2 +1,2 @@
-declare module "app2/App";
-declare module "remote/RemoteApp";
+declare module "primeBlue/RemoteAppBlue";
+declare module "primeRed/RemoteAppRed";

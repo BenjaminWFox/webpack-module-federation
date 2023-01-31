@@ -31,13 +31,16 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
     new ModuleFederationPlugin({
-      name: 'remote',
-      library: { type: 'var', name: 'remote' },
-      filename: 'remoteEntry.js',
+      name: 'remoteNameDoesNotMatterBlue',
+      library: { type: 'var', name: 'remoteNameBlue' },
+      filename: 'remoteEntryBlue.js',
       exposes: {
-        "./RemoteApp": "./src/RemoteApp.tsx",
+        // Note: The file name here (RemoteAppBlue.tsx) MUST be unique. A collision will cause problems on the host.
+        "./RemoteAppBlue": "./src/RemoteAppBlue.tsx",
       },
       shared: {
         'react': { singleton: true, eager: true } ,
